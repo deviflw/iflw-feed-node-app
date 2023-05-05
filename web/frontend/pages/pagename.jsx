@@ -1,5 +1,5 @@
-import { Card, Page, Layout, TextContainer, Text } from "@shopify/polaris";
-import { TitleBar } from "@shopify/app-bridge-react";
+import {AlphaCard, Page, Layout, VerticalStack, Text} from "@shopify/polaris";
+import {TitleBar} from "@shopify/app-bridge-react";
 
 export default function PageName() {
   return (
@@ -7,44 +7,44 @@ export default function PageName() {
       <TitleBar
         title="Page name"
         primaryAction={{
-          content: "Primary action",
-          onAction: () => console.log("Primary action"),
-        }}
-        secondaryActions={[
-          {
-            content: "Secondary action",
-            onAction: () => console.log("Secondary action"),
-          },
-        ]}
-      />
+        content: "Primary action",
+        onAction: () => console.log("Primary action")
+      }}
+        secondaryActions={[{
+          content: "Secondary action",
+          onAction: () => console.log("Secondary action")
+        }
+      ]}/>
       <Layout>
         <Layout.Section>
-          <Card sectioned>
+          <div style={ {marginBottom: "20px"}}>
+          <AlphaCard>
             <Text variant="headingMd" as="h2">
               Heading
             </Text>
-            <TextContainer>
+            <VerticalStack>
               <p>Body</p>
-            </TextContainer>
-          </Card>
-          <Card sectioned>
+            </VerticalStack>
+          </AlphaCard>
+          </div>
+          <AlphaCard>
             <Text variant="headingMd" as="h2">
-              Heading
+              HHHH
             </Text>
-            <TextContainer>
+            <VerticalStack>
               <p>Body</p>
-            </TextContainer>
-          </Card>
+            </VerticalStack>
+          </AlphaCard>
         </Layout.Section>
         <Layout.Section secondary>
-          <Card sectioned>
+          <AlphaCard>
             <Text variant="headingMd" as="h2">
-              Heading
+              Gggg
             </Text>
-            <TextContainer>
+            <VerticalStack>
               <p>Body</p>
-            </TextContainer>
-          </Card>
+            </VerticalStack>
+          </AlphaCard>
         </Layout.Section>
       </Layout>
     </Page>

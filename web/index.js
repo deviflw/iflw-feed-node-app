@@ -8,6 +8,9 @@ import shopify from "./shopify.js";
 import productCreator from "./product-creator.js";
 import GDPRWebhookHandlers from "./gdpr.js";
 
+//Milanova
+import products from './products';
+
 const PORT = parseInt(process.env.BACKEND_PORT || process.env.PORT, 10);
 
 const STATIC_PATH =
@@ -56,6 +59,22 @@ app.get("/api/products/create", async (_req, res) => {
   }
   res.status(status).send({ success: status === 200, error });
 });
+
+//Milanova
+
+app.get('/api/products', async (_req, res) => {
+  try {
+    const fetchedProducts = await products.fetchProducts(res.locals.shopify.session);
+    console.log('Fetched products:', fetchedProducts); // Log the fetched products
+    res.status(200).send(fetchedProducts);
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    res.status(500).send({ success: false, error: error.message });
+  }
+});
+
+
+//End of Milanova
 
 app.use(shopify.cspHeaders());
 app.use(serveStatic(STATIC_PATH, { index: false }));
