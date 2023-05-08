@@ -63,17 +63,17 @@ app.get("/api/products/create", async (_req, res) => {
 
 //Milanova
 
-app.get('/api/products', async (_req, res) => {
-  console.log('Fetching products');
+app.get("/api/products", async (_req, res) => {
   try {
     const fetchedProducts = await products.fetchProducts(res.locals.shopify.session);
-    console.log('Fetched products:', fetchedProducts); // Log the fetched products
-    res.status(200).send(fetchedProducts);
+    res.status(200).send({ success: true, products: fetchedProducts });
   } catch (error) {
-    console.error('Error fetching products:', error);
+    console.error("Error fetching products:", error);
     res.status(500).send({ success: false, error: error.message });
   }
 });
+
+
 //End of Milanova
 
 app.use(shopify.cspHeaders());
