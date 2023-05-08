@@ -1,6 +1,9 @@
 import { GraphqlQueryError } from "@shopify/shopify-api";
 import shopify from "./shopify.js";
 
+console.log('product creator file...');
+
+
 const ADJECTIVES = [
   "autumn",
   "hidden",

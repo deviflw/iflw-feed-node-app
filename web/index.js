@@ -1,4 +1,5 @@
 // @ts-check
+console.log('Server starting...');
 import { join } from "path";
 import { readFileSync } from "fs";
 import express from "express";
@@ -9,7 +10,7 @@ import productCreator from "./product-creator.js";
 import GDPRWebhookHandlers from "./gdpr.js";
 
 //Milanova
-import products from './products';
+import products from './products.js';
 
 const PORT = parseInt(process.env.BACKEND_PORT || process.env.PORT, 10);
 
@@ -63,6 +64,7 @@ app.get("/api/products/create", async (_req, res) => {
 //Milanova
 
 app.get('/api/products', async (_req, res) => {
+  console.log('Fetching products');
   try {
     const fetchedProducts = await products.fetchProducts(res.locals.shopify.session);
     console.log('Fetched products:', fetchedProducts); // Log the fetched products
@@ -72,8 +74,6 @@ app.get('/api/products', async (_req, res) => {
     res.status(500).send({ success: false, error: error.message });
   }
 });
-
-
 //End of Milanova
 
 app.use(shopify.cspHeaders());

@@ -1,5 +1,6 @@
 import {AlphaCard, Page, Layout, VerticalStack, Text} from "@shopify/polaris";
 import {TitleBar} from "@shopify/app-bridge-react";
+console.log('pagename page...');
 
 export default function PageName() {
   return (

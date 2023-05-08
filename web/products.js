@@ -1,5 +1,12 @@
 import { GraphqlQueryError } from "@shopify/shopify-api";
 import shopify from "./shopify.js";
+import { AppBridgeClient, createApp } from "@shopify/app-bridge";
+
+console.log('products.js');
+
+const app = createApp(appBridgeConfig);
+const appBridgeClient = new AppBridgeClient(app);
+
 
 const FETCH_PRODUCTS_QUERY = `
   query {
@@ -19,7 +26,7 @@ const FETCH_PRODUCTS_QUERY = `
           images(first: 1) {
             edges {
               node {
-                src
+                url
               }
             }
           }
@@ -29,25 +36,24 @@ const FETCH_PRODUCTS_QUERY = `
   }
 `;
 
-async function fetchProducts(session) {
-  const client = new shopify.api.clients.Graphql({ session });
-
+async function fetchProducts() {
   try {
-    const { data } = await client.query({
-      data: {
-        query: FETCH_PRODUCTS_QUERY,
-      },
-    });
+    const response = await fetch("/api/products");
+    const data = await response.json();
 
-    return data.products.edges.map(({ node }) => node);
-  } catch (error) {
-    if (error instanceof GraphqlQueryError) {
-      throw new Error(
-        `${error.message}\n${JSON.stringify(error.response, null, 2)}`
-      );
+    if (data.success) {
+      // Dispatch a custom action with the result
+      appBridgeClient.dispatch({
+        type: "PRODUCTS_FETCHED",
+        payload: {
+          products: data.products,
+        },
+      });
     } else {
-      throw error;
+      console.error("Error fetching products:", data.error);
     }
+  } catch (error) {
+    console.error("Error calling /api/products:", error);
   }
 }
 

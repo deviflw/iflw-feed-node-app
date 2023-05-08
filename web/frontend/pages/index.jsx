@@ -1,3 +1,5 @@
+console.log('index page...');
+
 import {
   AlphaCard,
   Page,
