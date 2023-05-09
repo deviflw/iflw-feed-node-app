@@ -62,7 +62,6 @@ app.get("/api/products/create", async (_req, res) => {
 });
 
 //Milanova
-
 app.get("/api/products", async (_req, res) => {
   try {
     const fetchedProducts = await products.fetchProducts(res.locals.shopify.session);
@@ -72,8 +71,6 @@ app.get("/api/products", async (_req, res) => {
     res.status(500).send({ success: false, error: error.message });
   }
 });
-
-
 //End of Milanova
 
 app.use(shopify.cspHeaders());

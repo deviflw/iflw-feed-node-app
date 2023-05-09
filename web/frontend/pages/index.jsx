@@ -12,15 +12,15 @@ import {
   Button
 } from "@shopify/polaris";
 
-import {
-  MagicMajor
-} from '@shopify/polaris-icons';
+import {MagicMajor} from '@shopify/polaris-icons';
 
 import {TitleBar} from "@shopify/app-bridge-react";
 
 import {trophyImage} from "../assets";
 
 import {ProductsCard} from "../components";
+
+import {FetchProductsCard} from "../components";
 
 export default function HomePage() {
   return (
@@ -82,11 +82,7 @@ export default function HomePage() {
                 <div style={{
                   padding: "0 15px"
                 }}>
-                  <Button
-                    accessibilityLabel="Milanova button"
-                    icon={MagicMajor}
-                    url=""
-                    external>Milanova button
+                  <Button accessibilityLabel="Milanova button" icon={MagicMajor} url="" external>Milanova button
                   </Button>
                 </div>
               </LegacyStack.Item>
@@ -95,6 +91,9 @@ export default function HomePage() {
         </Layout.Section>
         <Layout.Section>
           <ProductsCard/>
+        </Layout.Section>
+        <Layout.Section>
+          <FetchProductsCard/>
         </Layout.Section>
       </Layout>
     </Page>
