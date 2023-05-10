@@ -29,7 +29,7 @@ const FETCH_PRODUCTS_QUERY = `
   }
 `;
 
-async function fetchProducts(session) {
+export default async function fetchProducts(session) {
   const client = new shopify.api.clients.Graphql({ session });
 
   try {
@@ -38,6 +38,7 @@ async function fetchProducts(session) {
         query: FETCH_PRODUCTS_QUERY,
       },
     });
+    console.log('MY DATA');
 
     return data.products.edges.map(({ node }) => node);
   } catch (error) {
@@ -50,7 +51,3 @@ async function fetchProducts(session) {
     }
   }
 }
-
-export default {
-  fetchProducts,
-};

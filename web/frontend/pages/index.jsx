@@ -24,7 +24,7 @@ import {FetchProductsCard} from "../components";
 
 export default function HomePage() {
   return (
-    <Page narrowWidth>
+    <Page>
       <TitleBar title="Milanova" primaryAction={null}/>
       <Layout>
         <Layout.Section>
