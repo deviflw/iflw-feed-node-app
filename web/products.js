@@ -30,17 +30,18 @@ const FETCH_PRODUCTS_QUERY = `
 `;
 
 export default async function fetchProducts(session) {
+  
   const client = new shopify.api.clients.Graphql({ session });
 
   try {
-    const { data } = await client.query({
+    const products = await client.query({
       data: {
         query: FETCH_PRODUCTS_QUERY,
       },
     });
 
-    // return data.products.edges.map(({ node }) => node);
-    return data;
+    // return data.products.edges.map(({ node }) => node); - error products undefined
+    return products;
 
   } catch (error) {
     if (error instanceof GraphqlQueryError) {

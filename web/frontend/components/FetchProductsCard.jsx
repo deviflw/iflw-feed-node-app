@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Card, Text } from "@shopify/polaris";
 import { Toast } from "@shopify/app-bridge-react";
-import { useAppQuery, useAuthenticatedFetch } from "../hooks";
+import { useAuthenticatedFetch } from "../hooks";
 
 export function FetchProductsCard() {
   const emptyToastProps = { content: null };
@@ -9,22 +9,7 @@ export function FetchProductsCard() {
   const [toastProps, setToastProps] = useState(emptyToastProps);
   const fetch = useAuthenticatedFetch();
 
-  const {
-    data,
-    refetch: refetchProducts,
-    isLoading: isLoadingProducts,
-    isRefetching: isRefetchingProducts,
-  } = useAppQuery({
-    url: "/api/products",
-    fetchInit: { fetch },
-    reactQueryOptions: {
-      onSuccess: () => {
-        setIsLoading(false);
-      },
-    },
-  });
-
-  const toastMarkup = toastProps.content && !isRefetchingProducts && (
+  const toastMarkup = toastProps.content && (
     <Toast {...toastProps} onDismiss={() => setToastProps(emptyToastProps)} />
   );
 
@@ -33,21 +18,19 @@ export function FetchProductsCard() {
     const response = await fetch("/api/products");
 
     if (response.ok) {
-      const data = await refetchProducts();
-      console.log('My data2: ', data);
       setIsLoading(false);
+      console.log('My data: ', response.json()); // <-- access fetchedProducts here
       setToastProps({ content: "Products fetched successfully!" });
     } else {
-      const errorData = await response.json(); // Extract error data from the response
-      console.error('Error fetching products:', errorData); // Log the error data
       setIsLoading(false);
       setToastProps({
-        content: "There was an error fetching products",
+        content: "There was an error creating products",
         error: true,
       });
     }
   };
-
+  
+  
   return (
     <>
       {toastMarkup}
