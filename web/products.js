@@ -38,9 +38,10 @@ export default async function fetchProducts(session) {
         query: FETCH_PRODUCTS_QUERY,
       },
     });
-    console.log('MY DATA');
 
-    return data.products.edges.map(({ node }) => node);
+    // return data.products.edges.map(({ node }) => node);
+    return data;
+
   } catch (error) {
     if (error instanceof GraphqlQueryError) {
       throw new Error(

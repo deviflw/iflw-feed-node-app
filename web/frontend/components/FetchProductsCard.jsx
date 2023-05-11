@@ -34,7 +34,7 @@ export function FetchProductsCard() {
 
     if (response.ok) {
       const data = await refetchProducts();
-      console.log(data);
+      console.log('My data: ', data);
       setIsLoading(false);
       setToastProps({ content: "Products fetched successfully!" });
     } else {

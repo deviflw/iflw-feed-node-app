@@ -1,5 +1,4 @@
 // @ts-check
-console.log('Server starting...');
 import { join } from "path";
 import { readFileSync } from "fs";
 import express from "express";
@@ -65,19 +64,16 @@ app.get("/api/products/create", async (_req, res) => {
 app.get("/api/products", async (_req, res) => {
   let status = 200;
   let error = null;
-  let fetchedProducts = null;
 
   try {
-    fetchedProducts = await fetchProducts(res.locals.shopify.session);
+    await fetchProducts(res.locals.shopify.session);
   } catch (e) {
     console.error("Error fetching products:", e.message);
-    console.log(`Failed!!: ${e.message}`);
     status = 500;
     error = e.message;
   }
-  res.status(status).send({ success: status === 200, error, products: fetchedProducts });
+  res.status(status).send({ success: status === 200, error });
 });
-
 //End of Milanova
 
 app.use(shopify.cspHeaders());
