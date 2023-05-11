@@ -64,15 +64,16 @@ app.get("/api/products/create", async (_req, res) => {
 app.get("/api/products", async (_req, res) => {
   let status = 200;
   let error = null;
+  let fetchedProducts = null;
 
   try {
-    await fetchProducts(res.locals.shopify.session);
+    fetchedProducts = await fetchProducts(res.locals.shopify.session);
   } catch (e) {
     console.error("Error fetching products:", e.message);
     status = 500;
     error = e.message;
   }
-  res.status(status).send({ success: status === 200, error });
+  res.status(status).send({ success: status === 200, error, fetchedProducts });
 });
 //End of Milanova
 
