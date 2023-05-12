@@ -53,3 +53,6 @@ export default async function fetchProducts(session) {
     }
   }
 }
+
+
+//TODO fix the map function to filter results for the front end
