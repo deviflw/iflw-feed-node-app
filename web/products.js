@@ -2,31 +2,31 @@ import { GraphqlQueryError } from "@shopify/shopify-api";
 import shopify from "./shopify.js";
 
 const FETCH_PRODUCTS_QUERY = `
-  query {
-    products(first: 10) {
-      edges {
-        node {
-          id
-          title
-          description
-          variants(first: 1) {
-            edges {
-              node {
-                price
-              }
+{
+  products(first: 10, query:"tag:google_feed") {
+    edges {
+      cursor
+      node {
+        id
+        title
+        tags
+        variants(first: 4) {
+          edges {
+            node {
+              id
             }
           }
-          images(first: 1) {
-            edges {
-              node {
-                url
-              }
-            }
+          pageInfo {
+            hasNextPage
           }
         }
       }
     }
+    pageInfo {
+      hasNextPage
+    }
   }
+}
 `;
 
 export default async function fetchProducts(session) {
