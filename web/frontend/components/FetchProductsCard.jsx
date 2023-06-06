@@ -19,7 +19,7 @@ export function FetchProductsCard() {
 
     if (response.ok) {
       setIsLoading(false);
-      console.log('My data: ', await response.json()); // <-- access fetchedProducts here
+      console.log('My products: ', await response.json()); // <-- access fetchedProducts here
       setToastProps({ content: "Products fetched successfully!" });
     } else {
       setIsLoading(false);
