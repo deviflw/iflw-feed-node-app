@@ -2,6 +2,9 @@ import { useState } from "react";
 import { Card, Text } from "@shopify/polaris";
 import { Toast } from "@shopify/app-bridge-react";
 import { useAuthenticatedFetch } from "../hooks";
+import { xmlGenerator } from './xml-feed.js';
+import fs from 'fs';
+import path from 'path';
 
 export function FetchProductsCard() {
   const emptyToastProps = { content: null };
@@ -16,11 +19,20 @@ export function FetchProductsCard() {
   const handleFetchProducts = async () => {
     setIsLoading(true);
     const response = await fetch("/api/products");
-
+  
     if (response.ok) {
       setIsLoading(false);
-      console.log('My products: ', await response.json()); // <-- access fetchedProducts here
-      setToastProps({ content: "Products fetched successfully!" });
+      const products = await response.json();
+      console.log('My products and xml: ', products); 
+  
+      // Generate the XML.
+      const xml = xmlGenerator(products);
+  
+      // Write the XML to a file.
+      const outputPath = path.join(__dirname, 'frontend', 'feeds', 'products.xml');
+      fs.writeFileSync(outputPath, xml, 'utf8');
+  
+      setToastProps({ content: "Products fetched and XML generated successfully!" });
     } else {
       setIsLoading(false);
       setToastProps({
@@ -29,6 +41,7 @@ export function FetchProductsCard() {
       });
     }
   };
+  
   
   
   return (
