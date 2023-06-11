@@ -1,6 +1,6 @@
 // @ts-check
 import {join} from "path";
-import {readFileSync} from "fs";
+import {readFileSync, writeFileSync} from "fs";
 import express from "express";
 import serveStatic from "serve-static";
 
@@ -10,6 +10,7 @@ import GDPRWebhookHandlers from "./gdpr.js";
 
 //Milanova
 import fetchProducts from './products.js';
+import { xmlGenerator } from "./xml-feed.js";
 
 const PORT = parseInt(process.env.BACKEND_PORT || process.env.PORT, 10);
 
@@ -62,12 +63,29 @@ app.get("/api/products/create", async(_req, res) => {
 });
 
 //Milanova
+
 app.get("/api/products", async(_req, res) => {
-  const fetchedProducts = await fetchProducts(res.locals.shopify.session);
-  res
-    .status(200)
-    .send({fetchedProducts});
+  try {
+    const fetchedProducts = await fetchProducts(res.locals.shopify.session);
+  
+    // generate XML from the fetched products and write it to a file
+    const xml = xmlGenerator('ggeewerfsf');
+    writeFileSync('./frontend/feeds/test.xml', xml);
+
+    res.status(200).send({fetchedProducts});
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: 'An error occurred while fetching products and writing the XML file.' });
+  }
 });
+
+// app.get("/api/products", async(_req, res) => {
+//   const fetchedProducts = await fetchProducts(res.locals.shopify.session);
+//   res
+//     .status(200)
+//     .send({fetchedProducts});
+// });
+
 //End of Milanova
 
 app.use(shopify.cspHeaders());

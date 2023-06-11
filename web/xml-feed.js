@@ -1,21 +1,27 @@
-const builder = require('xmlbuilder');
+import { create } from 'xmlbuilder';
 
-function xmlGenerator(products) {
-  // Create the root element
-  let root = builder.create('products');
+export function xmlGenerator(products) {
 
-  // Loop through each product and add it to the XML
-  products.forEach(product => {
-    let productElement = root.ele('product');
-    productElement.ele('title', product.title);
-    productElement.ele('tags', product.tags);
-    productElement.ele('id', product.id);
-  });
+    // let xml = create(products).end({ pretty: true});
+    // console.log(xml);
 
-  // Convert the XML to a string
-  let xml = root.end({ pretty: true });
+    let obj = {
+        root: {
+          xmlbuilder: {
+            repo: {
+              '@type': 'git', // attributes start with @
+              '#text': products // text node
+            }
+          }
+        }
+      };
+       
+      let xml = create(obj).end({ pretty: true});
+      console.log('My xml: ', xml);
 
-  return xml;
+      return xml;
+
 }
 
-module.exports = { xmlGenerator };
+
+
