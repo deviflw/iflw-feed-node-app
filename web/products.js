@@ -1,13 +1,55 @@
 import { GraphqlQueryError } from "@shopify/shopify-api";
 import shopify from "./shopify.js";
 
+//FIXME only one id test
+//8245058535702 - single
+//8245058535702 - variable
 const FETCH_PRODUCTS_QUERY = `
 query ($numProducts: Int!, $cursor: String) {
-  products(first: $numProducts, after: $cursor, query:"tag:google_feed") {
-    nodes {
-      title
-      tags
-      id
+  products(first: $numProducts, after: $cursor) {
+      edges {
+      node {
+        title
+        description
+        onlineStoreUrl
+        handle
+        variants(first: 10) {
+          edges {
+            node {
+              id
+              displayName
+              title
+              barcode
+              inventoryQuantity
+              availableForSale
+              contextualPricing(context: {country: US}) {
+                price {
+                  amount
+                }
+              }
+            }
+          }
+        }
+        images(first: 10) {
+          edges {
+            node {
+              url
+            }
+          }
+        }
+        contextualPricing(context: {country: US}) {
+          priceRange {
+            maxVariantPrice {
+              amount
+              currencyCode
+            }
+          }
+        }
+        metafield(namespace: "google_feed", key: "included") {
+          key
+          value
+        }
+      }
     }
     pageInfo {
       hasNextPage
@@ -26,7 +68,8 @@ export default async function fetchProducts(session) {
       data: {
         query: FETCH_PRODUCTS_QUERY,
         variables: {
-          "numProducts": 10,
+          //FIXME
+          "numProducts": 2,
           "cursor": null
         },
       },

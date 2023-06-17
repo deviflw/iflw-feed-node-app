@@ -1,8 +1,18 @@
-import { create } from 'xmlbuilder2';
+import { create } from "xmlbuilder2";
+import * as utils from "./product-utils.js";
 
-export function xmlGenerator(products) {
 
-  console.log('Products data', products);
+export function xmlGenerator(fetchedProducts) {
+
+
+  const products = fetchedProducts.body.data.products.edges;
+
+  // console.log('Products data', products);
+
+  const combinedData = utils.combineProductData(products);
+  console.log('Combined data', combinedData);
+
+
     const root = create().ele('rss', { 'xmlns:g': 'http://base.google.com/ns/1.0', version: '2.0' });
     const channel = root.ele('channel');
     channel.ele('title').txt('IFLW EUR');

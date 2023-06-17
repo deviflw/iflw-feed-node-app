@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Card, Text } from "@shopify/polaris";
 import { Toast } from "@shopify/app-bridge-react";
 import { useAuthenticatedFetch } from "../hooks";
-import { xmlGenerator } from '../../xml-feed.js';
 
 export function FetchProductsCard() {
   const emptyToastProps = { content: null };
