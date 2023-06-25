@@ -66,10 +66,10 @@ app.get("/api/products/create", async(_req, res) => {
 
 app.get("/api/products", async(_req, res) => {
   try {
-    const fetchedProducts = await fetchProducts(res.locals.shopify.session);
+    const fetchedProducts = await fetchProducts(res.locals.shopify.session, "US");
   
     // generate XML from the fetched products and write it to a file
-    const xml = xmlGenerator(fetchedProducts);
+    const xml = xmlGenerator(fetchedProducts, "US");
     writeFileSync('./frontend/feeds/test2.xml', xml);
 
     res.status(200).send({fetchedProducts});

@@ -5,38 +5,92 @@
     <link>https://iflwatches.com</link>
     <description>Luxurious Watch Accessories Made by Hand</description>
     <item>
-      <g:id>my id</g:id>
-      <g:title>my title</g:title>
-      <g:description>my description</g:description>
-      <g:link>my link</g:link>
-      <g:image_link>my image_link</g:image_link>
-      <g:availability>my availability</g:availability>
-      <g:price>my price</g:price>
-      <g:google_product_category>my google_product_category</g:google_product_category>
-      <g:brand>my brand</g:brand>
-      <g:gtin>my gtin</g:gtin>
-      <g:condition>my condition</g:condition>
-      <g:age_group>my age_group</g:age_group>
-      <g:color>my color</g:color>
-      <g:gender>my gender</g:gender>
-      <g:size>my size</g:size>
+      <g:id>44682721460502</g:id>
+      <g:title>The Minimal Snowboard</g:title>
+      <g:description/>
+      <g:link/>
+      <g:image_link>https://cdn.shopify.com/s/files/1/0756/8546/2294/files/Main_14f76a78-43a1-443e-b15b-d595c499b300.jpg?v=1686659032</g:image_link>
+      <g:availability>in stock</g:availability>
+      <g:price>989.0 USD</g:price>
+      <g:gtin>380735192951</g:gtin>
+      <g:google_product_category>201</g:google_product_category>
+      <g:brand>IFLW</g:brand>
+      <g:condition>new</g:condition>
+      <g:age_group> adult</g:age_group>
+      <g:color>Blue, purple</g:color>
+      <g:gender>female</g:gender>
+      <g:size>oversized</g:size>
       <g:shipping>
-        <g:country>my country</g:country>
-        <g:service>my service</g:service>
-        <g:price>my shipping price</g:price>
+        <g:country>US</g:country>
+        <g:service>FedEx International Priority</g:service>
+        <g:price>31 USD</g:price>
       </g:shipping>
       <g:shipping>
-        <g:country>my second country</g:country>
-        <g:service>my second service</g:service>
-        <g:price>my second shipping price</g:price>
+        <g:country>US</g:country>
+        <g:service>FedEx International Economy</g:service>
+        <g:price>0 USD</g:price>
       </g:shipping>
-      <g:additional_image_link>my additional_image_link</g:additional_image_link>
+      <g:additional_image_link>https://cdn.shopify.com/s/files/1/0756/8546/2294/files/IFLW-orbit-winder-birch-ls1.jpg?v=1687697081</g:additional_image_link>
+      <g:additional_image_link>https://cdn.shopify.com/s/files/1/0756/8546/2294/files/IFLW-orbit-winder-birch-ls2.jpg?v=1687697084</g:additional_image_link>
       <g:identifier_exists>yes</g:identifier_exists>
     </item>
-    <data x="1" y="1"/>
-    <data x="2" y="4"/>
-    <data x="3" y="9"/>
-    <data x="4" y="16"/>
-    <data x="5" y="25"/>
+    <item>
+      <g:id>44682721558806</g:id>
+      <g:title>The Collection Snowboard: Hydrogen</g:title>
+      <g:description>Experience luxury on the slopes with The Collection Snowboard: Hydrogen. Crafted from genuine wood and finished with a perfect shine, this snowboard is sure to turn heads and make you feel like the center of attention. Whether you’re a pro or an amateur, its superior quality will ensure a smooth ride and a memorable experience.</g:description>
+      <g:link/>
+      <g:image_link>https://cdn.shopify.com/s/files/1/0756/8546/2294/products/Main_0a40b01b-5021-48c1-80d1-aa8ab4876d3d.jpg?v=1683286875</g:image_link>
+      <g:availability>in stock</g:availability>
+      <g:price>670.0 USD</g:price>
+      <g:gtin>380735192939</g:gtin>
+      <g:google_product_category>201</g:google_product_category>
+      <g:brand>Oris</g:brand>
+      <g:condition>new</g:condition>
+      <g:age_group> adult</g:age_group>
+      <g:color>Pink</g:color>
+      <g:gender>male</g:gender>
+      <g:size>small</g:size>
+      <g:shipping>
+        <g:country>US</g:country>
+        <g:service>FedEx International Priority</g:service>
+        <g:price>31 USD</g:price>
+      </g:shipping>
+      <g:shipping>
+        <g:country>US</g:country>
+        <g:service>FedEx International Economy</g:service>
+        <g:price>0 USD</g:price>
+      </g:shipping>
+      <g:additional_image_link>https://cdn.shopify.com/s/files/1/0756/8546/2294/files/IFLW-orbit-winder-birch-ls3.jpg?v=1687697844</g:additional_image_link>
+      <g:additional_image_link>https://cdn.shopify.com/s/files/1/0756/8546/2294/files/IFLW-orbit-winder-birch_knob.jpg?v=1687697851</g:additional_image_link>
+      <g:identifier_exists>yes</g:identifier_exists>
+    </item>
+    <item>
+      <g:id>44682721526038</g:id>
+      <g:title>The Hidden Snowboard</g:title>
+      <g:description/>
+      <g:link/>
+      <g:image_link>https://cdn.shopify.com/s/files/1/0756/8546/2294/products/Main_c8ff0b5d-c712-429a-be00-b29bd55cbc9d.jpg?v=1683286875</g:image_link>
+      <g:availability>in stock</g:availability>
+      <g:price>837.0 USD</g:price>
+      <g:gtin>380735192949</g:gtin>
+      <g:google_product_category>201</g:google_product_category>
+      <g:brand>IFLW</g:brand>
+      <g:condition>new</g:condition>
+      <g:age_group> adult</g:age_group>
+      <g:color>Orange, black</g:color>
+      <g:gender>unisex</g:gender>
+      <g:size>oversized</g:size>
+      <g:shipping>
+        <g:country>US</g:country>
+        <g:service>FedEx International Priority</g:service>
+        <g:price>31 USD</g:price>
+      </g:shipping>
+      <g:shipping>
+        <g:country>US</g:country>
+        <g:service>FedEx International Economy</g:service>
+        <g:price>0 USD</g:price>
+      </g:shipping>
+      <g:identifier_exists>yes</g:identifier_exists>
+    </item>
   </channel>
 </rss>
