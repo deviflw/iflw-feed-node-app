@@ -12,6 +12,7 @@ import GDPRWebhookHandlers from "./gdpr.js";
 import fetchProducts from './products.js';
 import { xmlGenerator } from "./xml-feed.js";
 import { extractPageInfo } from "./product-utils.js";
+import { create } from "xmlbuilder2";
 
 const PORT = parseInt(process.env.BACKEND_PORT || process.env.PORT, 10);
 
@@ -72,25 +73,33 @@ app.get("/api/products", async(_req, res) => {
     const session = res.locals.shopify.session;
     const country = "US";
 
+    // Create the root rss and channel elements
+    const root = create().ele('rss', { 'xmlns:g': 'http://base.google.com/ns/1.0', version: '2.0' });
+    const channel = root.ele('channel');
+    channel.ele('title').txt('IFLW EUR');
+    channel.ele('link').txt('https://iflwatches.com');
+    channel.ele('description').txt('Luxurious Watch Accessories Made by Hand');
+
     const writeProductsToXML = async (cursor) => {
       const fetchedProducts = await fetchProducts(session, country, cursor);
       
       // generate XML from the fetched products
-      const xml = xmlGenerator(fetchedProducts, country);
-      
-      // write XML to the file
-      writeStream.write(xml);
+      xmlGenerator(channel, fetchedProducts, country);
       
       // Extract pagination info
       const pageInfo = extractPageInfo(fetchedProducts.body.data.products);
-
+    
       // If there is a next page, recurse with the new cursor
       if (pageInfo.hasNextPage) {
         await writeProductsToXML(pageInfo.endCursor);
       }
     };
-
+    
     await writeProductsToXML();
+
+    // Write the complete XML document to the file
+    const xml = root.end({ prettyPrint: true });
+    writeStream.write(xml);
 
     // Close the write stream
     writeStream.end();
@@ -101,6 +110,7 @@ app.get("/api/products", async(_req, res) => {
     res.status(500).send({ error: 'An error occurred while fetching products and writing the XML file.' });
   }
 });
+
 
 
 // app.get("/api/products", async(_req, res) => {

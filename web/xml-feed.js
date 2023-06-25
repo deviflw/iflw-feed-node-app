@@ -1,17 +1,8 @@
-import { create } from "xmlbuilder2";
 import * as utils from "./product-utils.js";
 
-export function xmlGenerator(fetchedProducts, country) {
-
+export function xmlGenerator(channel, fetchedProducts, country) {
   const products = fetchedProducts.body.data.products.edges;
-
   const productData = utils.combineProductData(products);
-
-  const root = create().ele('rss', { 'xmlns:g': 'http://base.google.com/ns/1.0', version: '2.0' });
-  const channel = root.ele('channel');
-  channel.ele('title').txt('IFLW EUR');
-  channel.ele('link').txt('https://iflwatches.com');
-  channel.ele('description').txt('Luxurious Watch Accessories Made by Hand');
 
   const shippingInfo = {
     'US': { service1: 'FedEx International Priority', price1: '31', service2: 'FedEx International Economy', price2: '0' },
@@ -54,11 +45,7 @@ export function xmlGenerator(fetchedProducts, country) {
     });
     
     item.ele('g:identifier_exists').txt('yes');
-    });
-  
-  const xml = root.end({ prettyPrint: true });
-
-  return xml;
+  });
 }
 
 
