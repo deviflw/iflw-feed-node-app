@@ -1,6 +1,6 @@
 // @ts-check
 import {join} from "path";
-import {readFileSync, writeFileSync} from "fs";
+import {readFileSync, writeFileSync, createWriteStream } from "fs";
 import express from "express";
 import serveStatic from "serve-static";
 
@@ -11,6 +11,7 @@ import GDPRWebhookHandlers from "./gdpr.js";
 //Milanova
 import fetchProducts from './products.js';
 import { xmlGenerator } from "./xml-feed.js";
+import { extractPageInfo } from "./product-utils.js";
 
 const PORT = parseInt(process.env.BACKEND_PORT || process.env.PORT, 10);
 
@@ -66,18 +67,56 @@ app.get("/api/products/create", async(_req, res) => {
 
 app.get("/api/products", async(_req, res) => {
   try {
-    const fetchedProducts = await fetchProducts(res.locals.shopify.session, "US");
-  
-    // generate XML from the fetched products and write it to a file
-    const xml = xmlGenerator(fetchedProducts, "US");
-    writeFileSync('./frontend/feeds/test2.xml', xml);
+    const filePath = './frontend/feeds/test2.xml';
+    const writeStream = createWriteStream(filePath);
+    const session = res.locals.shopify.session;
+    const country = "US";
 
-    res.status(200).send({fetchedProducts});
+    const writeProductsToXML = async (cursor) => {
+      const fetchedProducts = await fetchProducts(session, country, cursor);
+      
+      // generate XML from the fetched products
+      const xml = xmlGenerator(fetchedProducts, country);
+      
+      // write XML to the file
+      writeStream.write(xml);
+      
+      // Extract pagination info
+      const pageInfo = extractPageInfo(fetchedProducts.body.data.products);
+
+      // If there is a next page, recurse with the new cursor
+      if (pageInfo.hasNextPage) {
+        await writeProductsToXML(pageInfo.endCursor);
+      }
+    };
+
+    await writeProductsToXML();
+
+    // Close the write stream
+    writeStream.end();
+
+    res.status(200).send({ message: 'XML file successfully written.' });
   } catch (error) {
     console.error(error);
     res.status(500).send({ error: 'An error occurred while fetching products and writing the XML file.' });
   }
 });
+
+
+// app.get("/api/products", async(_req, res) => {
+//   try {
+//     const fetchedProducts = await fetchProducts(res.locals.shopify.session, "US");
+ 
+//     // generate XML from the fetched products and write it to a file
+//     const xml = xmlGenerator(fetchedProducts, "US");
+//     writeFileSync('./frontend/feeds/test2.xml', xml);
+
+//     res.status(200).send({fetchedProducts});
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send({ error: 'An error occurred while fetching products and writing the XML file.' });
+//   }
+// });
 
 // app.get("/api/products", async(_req, res) => {
 //   const fetchedProducts = await fetchProducts(res.locals.shopify.session);

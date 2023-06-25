@@ -80,7 +80,7 @@ query ($numProducts: Int!, $cursor: String, $country: CountryCode) {
 }
 `;
 
-export default async function fetchProducts(session, country) {
+export default async function fetchProducts(session, country, cursor) {
   
   const client = new shopify.api.clients.Graphql({ session });
 
@@ -90,9 +90,9 @@ export default async function fetchProducts(session, country) {
         query: FETCH_PRODUCTS_QUERY,
         variables: {
           //FIXME
-          "numProducts": 4,
+          "numProducts": 5,
           "country": country,
-          "cursor": null
+          "cursor": cursor
         },
       },
     });
