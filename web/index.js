@@ -68,46 +68,47 @@ app.get("/api/products/create", async(_req, res) => {
 
 app.get("/api/products", async(_req, res) => {
   try {
-    const filePath = './frontend/feeds/test2.xml';
-    const writeStream = createWriteStream(filePath);
     const session = res.locals.shopify.session;
-    const country = "US";
+    const countries = ["US", "GB", "DE"];
 
-    // Create the root rss and channel elements
-    const root = create().ele('rss', { 'xmlns:g': 'http://base.google.com/ns/1.0', version: '2.0' });
-    const channel = root.ele('channel');
-    channel.ele('title').txt('IFLW EUR');
-    channel.ele('link').txt('https://iflwatches.com');
-    channel.ele('description').txt('Luxurious Watch Accessories Made by Hand');
+    for (const country of countries) {
+      const filePath = `./frontend/feeds/${country.toLowerCase()}.xml`;
+      const writeStream = createWriteStream(filePath);
 
-    const writeProductsToXML = async (cursor) => {
-      const fetchedProducts = await fetchProducts(session, country, cursor);
+      // Create root XML elements only once per country
+      const root = create().ele('rss', { 'xmlns:g': 'http://base.google.com/ns/1.0', version: '2.0' });
+      const channel = root.ele('channel');
+      channel.ele('title').txt('IFLW EUR');
+      channel.ele('link').txt('https://iflwatches.com');
+      channel.ele('description').txt('Luxurious Watch Accessories Made by Hand');
+
+      const writeProductsToXML = async (cursor) => {
+        const fetchedProducts = await fetchProducts(session, country, cursor);
       
-      // generate XML from the fetched products
-      xmlGenerator(channel, fetchedProducts, country);
+        // generate XML from the fetched products
+        xmlGenerator(channel, fetchedProducts, country);
       
-      // Extract pagination info
-      const pageInfo = extractPageInfo(fetchedProducts.body.data.products);
-    
-      // If there is a next page, recurse with the new cursor
-      if (pageInfo.hasNextPage) {
-        await writeProductsToXML(pageInfo.endCursor);
-      }
-    };
-    
-    await writeProductsToXML();
+        // Extract pagination info
+        const pageInfo = extractPageInfo(fetchedProducts.body.data.products);
 
-    // Write the complete XML document to the file
-    const xml = root.end({ prettyPrint: true });
-    writeStream.write(xml);
+        // If there is a next page, recurse with the new cursor
+        if (pageInfo.hasNextPage) {
+          await writeProductsToXML(pageInfo.endCursor);
+        } else {
+          // When we're done with all pages, end the XML and write to the file
+          const xml = root.end({ prettyPrint: true });
+          writeStream.write(xml);
+          writeStream.end();
+        }
+      };
 
-    // Close the write stream
-    writeStream.end();
+      await writeProductsToXML();
+    }
 
-    res.status(200).send({ message: 'XML file successfully written.' });
+    res.status(200).send({ message: 'XML files successfully written.' });
   } catch (error) {
     console.error(error);
-    res.status(500).send({ error: 'An error occurred while fetching products and writing the XML file.' });
+    res.status(500).send({ error: 'An error occurred while fetching products and writing the XML files.' });
   }
 });
 
